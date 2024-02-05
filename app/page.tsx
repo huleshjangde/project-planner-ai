@@ -4,6 +4,9 @@ import { Russo_One } from "next/font/google";
 import Image from "next/image";
 import ScrollSection from "@/components/Features";
 import Faq from "@/components/Faq";
+import Footer from "@/components/Footer";
+import Content from "@/components/Content";
+import Link from "next/link";
 
 const russo = Russo_One({
   weight: ["400"],
@@ -29,19 +32,25 @@ const Home = () => {
           management for unparalleled efficiency and creativity.
         </p>
 
-        <button className="bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-2xl border-2 mt-10 border-green-400 px-5 py-2 rounded-lg hover:scale-110 ease-linear duration-200 shadow-xl shadow-blue-500/50">
+        <Link
+          href={"/project"}
+          className="bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-2xl border-2 mt-10 border-green-400 px-5 py-2 rounded-lg hover:scale-110 ease-linear duration-200 shadow-xl shadow-blue-500/50"
+        >
           Try it now for FREE
-        </button>
-        <Image
+        </Link>
+        {/* <Image
           src={"/hero3.png"}
           alt="hero"
           width={700}
           height={700}
           className="mt-10 rounded-md"
-        />
+        /> */}
+
+        <Content />
       </div>
       <ScrollSection />
       <Faq />
+      <Footer />
     </div>
   );
 };

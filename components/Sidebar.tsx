@@ -39,9 +39,9 @@ const Sidebar: React.FC<SidebarProps> = ({
   };
   return (
     <div
-      className={`fixed ease-linear duration-100 top-0 left-0 h-full  bg-gray-700 backdrop-blur-lg p-2 flex justify-center align-middle items-center ${show ? "w-64" : " w-14 "} `}
+      className={`fixed ease-linear duration-100 top-0 left-0 h-full  bg-black p-2 flex justify-center align-middle items-center ${show ? "w-64" : " w-14 "} `}
     >
-      <span className="w-36 absolute top-12 h-60 rounded-full bg-red-600 blur-[100px] z-0"></span>
+      <span className="w-36 absolute top-12 h-60 rounded-full bg-red-400 blur-[100px] z-0"></span>
       <div className="flex flex-col text-left h-fit gap-5 text-slate-200 w-full  relative ">
         {/* <button onClick={toggelSidebar} className={`absolute bg-blue-300 rounded-lg p-1  top-10 ${show ? "right-0" : "-right-20 "}`}><IoIosArrowDropleftCircle /></button> */}
         <Button

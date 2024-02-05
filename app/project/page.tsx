@@ -16,24 +16,12 @@ const Home = () => {
   const [name, setName] = useState<string>("");
   const [discription, setDiscription] = useState<string>("");
 
-  const [projectPhasesContent, setProjectPhasesContent] = useState(
-    "Initial Content for Project Phases",
-  );
-  const [keyFeaturesContent, setKeyFeaturesContent] = useState(
-    "Initial Content for Key Features",
-  );
-  const [technologyStackContent, setTechnologyStackContent] = useState(
-    "Initial Content for Technology Stack",
-  );
-  const [timelineContent, setTimelineContent] = useState(
-    "Initial Content for Timeline",
-  );
-  const [budgetContent, setBudgetContent] = useState(
-    "Initial Content for Budget",
-  );
-  const [expectedOutcomesContent, setExpectedOutcomesContent] = useState(
-    "Initial Content for Expected Outcomes",
-  );
+  const [projectPhasesContent, setProjectPhasesContent] = useState("");
+  const [keyFeaturesContent, setKeyFeaturesContent] = useState("");
+  const [technologyStackContent, setTechnologyStackContent] = useState("");
+  const [timelineContent, setTimelineContent] = useState("");
+  const [budgetContent, setBudgetContent] = useState("");
+  const [expectedOutcomesContent, setExpectedOutcomesContent] = useState("");
 
   const Mystyle = () => {
     return <ReactQuill value={value} />;
@@ -188,7 +176,7 @@ const Home = () => {
   };
 
   return (
-    <div className="w-full ml-64 p-4 bg-white text-black">
+    <div className="w-[100vw-396px] ml-64 px-10 py-10 bg-white text-black   ">
       <Sidebar
         onProjectPhasesClick={() => scrollToSection(projectPhasesRef)}
         onKeyFeaturesClick={() => scrollToSection(keyFeaturesRef)}
@@ -209,42 +197,37 @@ const Home = () => {
         loading={loading}
       />
 
-      <div className="flex-1 w-fit ml-60">
-        <Section title="Project Phases" value={projectPhasesContent} />
+      {/* <Section title="Project Phases" value={projectPhasesContent} /> */}
 
-        {value && (
-          <>
-            <div ref={projectOverview}>
-              <Section title="Project Overview" value={value} />
-            </div>
+      {value && (
+        <>
+          <div ref={projectOverview}>
+            <Section title="Project Overview" value={value} />
+          </div>
 
-            <div ref={projectPhasesRef}>
-              <Section title="Project Phases" value={projectPhasesContent} />
-            </div>
-            <div ref={keyFeaturesRef}>
-              <Section title="Key Features" value={keyFeaturesContent} />
-            </div>
-            <div ref={technologyStackRef}>
-              <Section
-                title="Technology Stack"
-                value={technologyStackContent}
-              />
-            </div>
-            <div ref={timelineRef}>
-              <Section title="Timeline" value={timelineContent} />
-            </div>
-            <div ref={budgetRef}>
-              <Section title="Budget" value={budgetContent} />
-            </div>
-            <div ref={expectedOutcomesRef}>
-              <Section
-                title="Expected Outcomes"
-                value={expectedOutcomesContent}
-              />
-            </div>
-          </>
-        )}
-      </div>
+          <div ref={projectPhasesRef}>
+            <Section title="Project Phases" value={projectPhasesContent} />
+          </div>
+          <div ref={keyFeaturesRef}>
+            <Section title="Key Features" value={keyFeaturesContent} />
+          </div>
+          <div ref={technologyStackRef}>
+            <Section title="Technology Stack" value={technologyStackContent} />
+          </div>
+          <div ref={timelineRef}>
+            <Section title="Timeline" value={timelineContent} />
+          </div>
+          <div ref={budgetRef}>
+            <Section title="Budget" value={budgetContent} />
+          </div>
+          <div ref={expectedOutcomesRef}>
+            <Section
+              title="Expected Outcomes"
+              value={expectedOutcomesContent}
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 };

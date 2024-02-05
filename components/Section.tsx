@@ -2,6 +2,7 @@
 import React from "react";
 import { GrOverview } from "react-icons/gr";
 import Markdown from "markdown-to-jsx";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Card,
   CardHeader,
@@ -26,17 +27,25 @@ const Section = ({ value, title }: { value: string; title: string }) => {
           </CardHeader>
           <Divider />
           <CardBody>
-            <Markdown>{value}</Markdown>
+            {value ? (
+              <Markdown>{value}</Markdown>
+            ) : (
+              <div className="space-y-2">
+                <Skeleton className="h-4 bg-gray-700 w-[750px]" />
+                <Skeleton className="h-4  bg-gray-700 w-[600px]" />
+                <Skeleton className="h-4  bg-gray-700 w-[500px]" />
+              </div>
+            )}
           </CardBody>
           <Divider />
-          <CardFooter>
+          {/* <CardFooter>
             <p>
               <span className="font-bold">Disclaimer: </span>This AI-generated
               project plan is for guidance only and may not cover all aspects of
               your project. The creators are not responsible for any errors,
               omissions, or inaccuracies.
             </p>
-          </CardFooter>
+          </CardFooter> */}
         </Card>
       </div>
     </>
