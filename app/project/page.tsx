@@ -1,9 +1,7 @@
 "use client";
 import Modals from "@/components/Modal";
 import React, { ReactNode, useEffect, useRef, useState } from "react";
-import ReactQuill from "react-quill";
 
-import "react-quill/dist/quill.snow.css";
 import Section from "@/components/Section";
 import Sidebar from "@/components/Sidebar";
 const { GoogleGenerativeAI } = require("@google/generative-ai");
@@ -22,10 +20,6 @@ const Home = () => {
   const [timelineContent, setTimelineContent] = useState("");
   const [budgetContent, setBudgetContent] = useState("");
   const [expectedOutcomesContent, setExpectedOutcomesContent] = useState("");
-
-  const Mystyle = () => {
-    return <ReactQuill value={value} />;
-  };
 
   // useEffect(() => {
   //   Mystyle();
