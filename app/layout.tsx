@@ -3,6 +3,9 @@ import { Catamaran } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar";
 import Sidebar from "@/components/Sidebar";
+import { Providers } from "@/redux/provider";
+import Footer from "@/components/Footer";
+import { Toaster } from "sonner";
 
 const inter = Catamaran({
   weight: ["400", "700"],
@@ -22,13 +25,23 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${inter.className} w-screen flex flex-col items-center text-white bg-black/90`}
-      >
-        {/* <Navbar /> */}
-        {/* <Sidebar/> */}
-        {children}
-      </body>
+      <Providers>
+        <body
+          className={`${inter.className} w-screen flex flex-col items-center text-gray-300 bg-black`}
+        >
+          {/* <div className="h-full w-full dark:bg-black  bg-black  dark:bg-grid-black/[0.2] bg-grid-white/15 relative flex flex-col items-center justify-center"> */}
+          {/* Radial gradient for the container to give a faded look */}
+          {/* <div className="absolute  -z-20 pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_20%,red)]"></div> */}
+
+          <Toaster richColors position="bottom-right" />
+          <Navbar />
+          {/* <Sidebar/> */}
+          {children}
+          <Footer />
+
+          {/* </div> */}
+        </body>
+      </Providers>
     </html>
   );
 }

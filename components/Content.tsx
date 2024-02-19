@@ -51,21 +51,21 @@ const Content = ({ title, icon, details }: any) => {
     <>
       <div
         ref={ref}
-        className="w-4/5 h-screen opacity-0 flex mt-40 bg-slate-100/20 px-10 py-5 rounded-md"
+        className="sm:w-4/5 w-full h-screen opacity-0 flex flex-col justify-center items-center sm:flex-row mt-40 bg-black px-10 py-5 rounded-md"
       >
         {" "}
-        <div className="text-center w-1/2 flex items-center justify-between h-full">
+        <div className="text-center w-1/2 flex sm:flex-row flex-col items-center justify-between h-full">
           <div className="flex justify-center items-center flex-col mt-20">
-            <p className="animated-text ">
+            <p className="animated-text relative z-20">
               Crafting Tomorrow: See What We are Building for You
             </p>
-            <h1 className="text-5xl font-extrabold text-yellow-400">
+            <h1 className="sm:text-5xl text-sm font-extrabold text-white">
               Behind the Scenes of Tomorrow: Your Preview Starts Here.
             </h1>
             <Image
               src={"/eye.gif"}
               alt={"ss "}
-              className="w-40 z-50 mt-10  rounded-md "
+              className="w-40 z-10 mt-10  rounded-md "
               width={"300"}
               height={200}
             />
@@ -75,7 +75,7 @@ const Content = ({ title, icon, details }: any) => {
           <Image
             src={"/arrow2.png"}
             alt={"ss "}
-            className="w-40 -left-40 top-10 absolute z-50 rounded-md "
+            className="w-40 -left-40 top-10 absolute z-10 rounded-md "
             width={"300"}
             height={200}
           />

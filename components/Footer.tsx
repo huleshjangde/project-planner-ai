@@ -1,18 +1,49 @@
-/**
- * v0 by Vercel.
- * @see https://v0.dev/t/Tzf6HbcWXPj
- * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
- */
+"use client";
 import Link from "next/link";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { useState } from "react";
+import { toast } from "sonner";
 
 export default function Footer() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [msg, setMsg] = useState("");
+
+  const handleSendEmail = async (e: Event) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("api/send", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, msg }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Email sent successfully:", data);
+        toast.success("Thank You!!");
+        setEmail("");
+        setName("");
+        setMsg("");
+      } else {
+        const errorData = await response.json();
+        console.error("Error sending email:", errorData);
+      }
+    } catch (error) {
+      console.error("Unexpected error:", error);
+    }
+  };
   return (
-    <footer className="w-full py-12 bg-gray-100 dark:bg-gray-800 text-black">
+    <footer
+      id="footer"
+      className="footer w-full py-12 bg-gray-100 dark:bg-gray-800 text-black"
+    >
       <div className="container grid gap-8 px-4 md:px-6 lg:grid-cols-3">
         <div className="flex flex-col items-center lg:items-start">
           <Link className="mb-2" href="#">
@@ -32,34 +63,50 @@ export default function Footer() {
         <div className="space-y-2 text-center lg:text-left">
           <h3 className="text-lg font-semibold">Contact Information</h3>
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            1234 Street Rd, Suite 100
+            Bilaspur
             <br />
-            City, State, 12345
+            Raipur, Chhattisgarh
           </p>
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            P: (123) 456-7890
+            P: +918962390730
             <br />
-            E: info@acmeinc.com
+            E: huleshjangde@yahoo.com
           </p>
         </div>
         <div className="space-y-4 text-black">
           <h3 className="text-lg font-semibold text-center lg:text-left">
-            Send us a message
+            Send us a message or Feedback
           </h3>
           <form className="grid gap-4">
             <div className="space-y-2">
               <Label htmlFor="name">Name</Label>
-              <Input id="name" required />
+              <Input
+                id="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" required type="email" />
+              <Input
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                type="email"
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="message">Message</Label>
-              <Textarea id="message" required />
+              <Textarea
+                id="message"
+                value={msg}
+                onChange={(e) => setMsg(e.target.value)}
+                required
+              />
             </div>
-            <Button type="submit">Submit</Button>
+            <Button onClick={(e) => handleSendEmail(e as any)}>Submit</Button>
           </form>
         </div>
       </div>

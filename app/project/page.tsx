@@ -1,49 +1,63 @@
 "use client";
 import Modals from "@/components/Modal";
+import gsap from "gsap";
 import React, { ReactNode, useEffect, useRef, useState } from "react";
 
 import Section from "@/components/Section";
 import Sidebar from "@/components/Sidebar";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import ProjectForm from "@/components/form/ProjectForm";
+import {
+  setProjectOverview,
+  setProjectPhasesContent,
+  setKeyFeaturesContent,
+  setTechnologyStackContent,
+  setTimelineContent,
+  setBudgetContent,
+  setExpectedOutcomesContent,
+  resetOutputs,
+} from "../../redux/projectSlice";
+import FloatingActionButtons from "@/components/actions/Action";
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const genAI = new GoogleGenerativeAI("AIzaSyAHAHgWkZJmzBv8ug2wlTIqPKGUGG7Xm0g");
 const Home = () => {
-  const [value, setValue] = useState(``);
-  const [okCall, setOkCall] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [complete, setComplete] = useState(false);
-  const [name, setName] = useState<string>("");
-  const [discription, setDiscription] = useState<string>("");
+  const dispatch = useDispatch();
+  const forms = useSelector((state: RootState) => state.projectForm);
+  const outputs = useSelector((state: RootState) => state.project);
 
-  const [projectPhasesContent, setProjectPhasesContent] = useState("");
-  const [keyFeaturesContent, setKeyFeaturesContent] = useState("");
-  const [technologyStackContent, setTechnologyStackContent] = useState("");
-  const [timelineContent, setTimelineContent] = useState("");
-  const [budgetContent, setBudgetContent] = useState("");
-  const [expectedOutcomesContent, setExpectedOutcomesContent] = useState("");
-
-  // useEffect(() => {
-  //   Mystyle();
-  // }, [value]);
-
+  useEffect(() => {
+    dispatch(resetOutputs());
+  }, []);
+  const animateMeRef = useRef(null);
+  useEffect(() => {
+    // Animate the div from bottom to top after the component mounts
+    gsap.fromTo(
+      animateMeRef.current,
+      { opacity: 0, y: 100 }, // From
+      { opacity: 1, y: 0, duration: 1 }, // To
+    );
+  }, [outputs.projectOverview]);
   async function phase() {
     // For text-only input, use the gemini-pro model
     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
-    const prompt = `your an project planer assistent your task is to give project phases content basde on my overview of project plan " ${projectPhasesContent} " `;
+    const prompt = `your an project planer assistent your task is to give project phases content basde on my overview of project plan " ${outputs.projectOverview} " `;
     console.log("====================================");
     console.log(prompt);
     console.log("====================================");
     const result = await model.generateContent(prompt);
     const response = await result.response;
     const text = response.text();
-    setProjectPhasesContent(text);
+
+    dispatch(setProjectPhasesContent(text));
     features();
   }
   async function features() {
     // For text-only input, use the gemini-pro model
     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
-    const prompt = `Your An Senior and super senior software engineer your task is to suggest features in my project . here is my project overview " ${value} "  and idea ${discription}`;
+    const prompt = `Your An Senior and super senior software engineer your task is to suggest features in my project . here is my project overview " ${outputs.projectOverview} "  and my idea is :  ${forms.projectDes}`;
     console.log("====================================");
     console.log(prompt);
     console.log("====================================");
@@ -52,71 +66,72 @@ const Home = () => {
     const text = response.text();
     technology(text);
     timeline(text);
-    setKeyFeaturesContent(text);
+
+    dispatch(setKeyFeaturesContent(text));
   }
 
   async function technology(preValue: string) {
     // For text-only input, use the gemini-pro model
     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
-    const prompt = `your an project planer assistent your task is to make and suggestion key technology stack to build or execute  for my project plan here is my project plan  overview " ${projectPhasesContent} "  and features ${preValue}`;
+    const prompt = `your an project planer assistent your task is to make and suggestion key technology stack to build or execute  for my project plan here is my project plan  overview " ${outputs.projectOverview} "  and features ${preValue}`;
     console.log("====================================");
     console.log(prompt);
     console.log("====================================");
     const result = await model.generateContent(prompt);
     const response = await result.response;
     const text = response.text();
-    setTechnologyStackContent(text);
+
+    dispatch(setTechnologyStackContent(text));
   }
   async function timeline(preValue: string) {
     // For text-only input, use the gemini-pro model
     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
-    const prompt = `your an project planer assistent your task is to make and suggestion key technology stack to build or execute  for my project plan here is my project plan  overview " ${projectPhasesContent} " and here is my features for project : ${preValue} `;
+    const prompt = `your an project planer assistent your task is to make and suggestion key technology stack to build or execute  for my project plan here is my project plan  overview " $ ${outputs.projectPhasesContent} " and here is my features for project : ${preValue} `;
     console.log("====================================");
     console.log(prompt);
     console.log("====================================");
     const result = await model.generateContent(prompt);
     const response = await result.response;
     const text = response.text();
+    dispatch(setTimelineContent(text));
     budget(text);
-    setTimelineContent(text);
   }
 
   async function budget(preValue: string) {
     // For text-only input, use the gemini-pro model
     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
-    const prompt = `your an project planer assistent your task is to make and suggestion budget to build or execute  for my project plan here is my project plan  overview " ${projectPhasesContent} " and here is my features for project : ${keyFeaturesContent} . and here is my timelite to develope project : ${preValue} `;
+    const prompt = `your an project planer assistent your task is to make and suggestion budget to build or execute  for my project plan here is my project plan  overview " ${outputs.projectOverview} " and here is my features for project : ${outputs.keyFeaturesContent} . and here is my timelite to develope project : ${preValue} `;
     console.log("====================================");
     console.log(prompt);
     console.log("====================================");
     const result = await model.generateContent(prompt);
     const response = await result.response;
     const text = response.text();
-    setBudgetContent(text);
+    dispatch(setBudgetContent(text));
+
     outcomes(text);
   }
   async function outcomes(preValue: string) {
     // For text-only input, use the gemini-pro model
     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
-    const prompt = `your an project planer assistent your task is to make and suggestion expected outcomes    for my project plan here is my project plan  overview " ${projectPhasesContent} " and here is my features for project : ${keyFeaturesContent} . `;
+    const prompt = `your an project planer assistent your task is to make and suggestion expected outcomes    for my project plan here is my project plan  overview " ${outputs.projectOverview} " and here is my features for project : ${outputs.keyFeaturesContent} . `;
     console.log("====================================");
     console.log(prompt);
     console.log("====================================");
     const result = await model.generateContent(prompt);
     const response = await result.response;
     const text = response.text();
-    setExpectedOutcomesContent(text);
-    setComplete(false);
+    dispatch(setExpectedOutcomesContent(text));
   }
   async function overview() {
     // For text-only input, use the gemini-pro model
     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-    setLoading(true);
-    setComplete(false);
-    const prompt = `your an project planner your task is to make project plan overview based on idea or imagination project name ${name} and description of my project idea is ${discription}  . please make it in table with column name "section , overview "  and section " Project Name
+
+    const prompt = `your an project planner your task is to make project plan overview based on idea or imagination project name ${forms.projectName} and description of my project idea is ${forms.projectDes}  . please make it in table with column name "section , overview "  and section " Project Name
     Project Goal,
     Target Audience,
     Key Features,
@@ -140,22 +155,13 @@ const Home = () => {
     const response = await result.response;
     const text = response.text();
 
-    setValue(text);
-    setLoading(false);
-    setComplete(true);
+    dispatch(setProjectOverview(text));
+
     phase();
     console.log("====================================");
     console.log(text);
     console.log("====================================");
   }
-
-  useEffect(() => {
-    if (okCall == true) {
-      console.log("====================================");
-      console.log("hello i am here");
-      console.log("====================================");
-    }
-  }, [okCall]);
 
   const projectPhasesRef = useRef<HTMLDivElement>(null);
   const keyFeaturesRef = useRef<HTMLDivElement>(null);
@@ -170,59 +176,109 @@ const Home = () => {
   };
 
   return (
-    <div className="w-[100vw-396px] ml-64 px-10 py-10 bg-white text-black   ">
-      <Sidebar
-        onProjectPhasesClick={() => scrollToSection(projectPhasesRef)}
-        onKeyFeaturesClick={() => scrollToSection(keyFeaturesRef)}
-        onTechnologyStackClick={() => scrollToSection(technologyStackRef)}
-        onTimelineClick={() => scrollToSection(timelineRef)}
-        onBudgetClick={() => scrollToSection(budgetRef)}
-        onExpectedOutcomesClick={() => scrollToSection(expectedOutcomesRef)}
-        onProjectOverviewClick={() => scrollToSection(projectOverview)}
-      />
-
-      <Modals
-        complete={complete}
-        call={overview as any}
-        name={setName}
-        n={name}
-        d={discription}
-        discription={setDiscription}
-        loading={loading}
-      />
-
-      {/* <Section title="Project Phases" value={projectPhasesContent} /> */}
-
-      {value && (
+    <>
+      {" "}
+      {outputs.projectOverview ? (
         <>
-          <div ref={projectOverview}>
-            <Section title="Project Overview" value={value} />
-          </div>
-
-          <div ref={projectPhasesRef}>
-            <Section title="Project Phases" value={projectPhasesContent} />
-          </div>
-          <div ref={keyFeaturesRef}>
-            <Section title="Key Features" value={keyFeaturesContent} />
-          </div>
-          <div ref={technologyStackRef}>
-            <Section title="Technology Stack" value={technologyStackContent} />
-          </div>
-          <div ref={timelineRef}>
-            <Section title="Timeline" value={timelineContent} />
-          </div>
-          <div ref={budgetRef}>
-            <Section title="Budget" value={budgetContent} />
-          </div>
-          <div ref={expectedOutcomesRef}>
-            <Section
-              title="Expected Outcomes"
-              value={expectedOutcomesContent}
+          {/* <FloatingActionButtons /> */}
+          {/* <ProjectForm generate={overview} /> */}
+          <div className="w-full bg-white flex ">
+            <Sidebar
+              active={false}
+              onProjectPhasesClick={() => scrollToSection(projectPhasesRef)}
+              onKeyFeaturesClick={() => scrollToSection(keyFeaturesRef)}
+              onTechnologyStackClick={() => scrollToSection(technologyStackRef)}
+              onTimelineClick={() => scrollToSection(timelineRef)}
+              onBudgetClick={() => scrollToSection(budgetRef)}
+              onExpectedOutcomesClick={() =>
+                scrollToSection(expectedOutcomesRef)
+              }
+              onProjectOverviewClick={() => scrollToSection(projectOverview)}
+              deleteId={0}
             />
+
+            <div
+              ref={animateMeRef}
+              className="w-full ml-10 px-10 py-10 bg-white text-black   "
+            >
+              {/* <div className="  h-fit w-full  bottom-0 flex justify-center items-center gap-4 pb-4">
+      <button
+        onClick={()=> {dispatch(setProjectOverview(""))  } }
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full shadow-lg"
+      >
+        Save
+      </button>
+
+      <button
+       onClick={()=>{ dispatch(resetOutputs()) } }
+        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full shadow-lg"
+      >
+        New Project
+      </button>
+    </div> */}
+              {/* <Modals
+      complete={complete}
+      call={overview as any}
+      name={setName}
+      n={name}
+      d={discription}
+      discription={setDiscription}
+      loading={loading}
+    /> */}
+
+              {/* <Section title="Project Phases" value={projectPhasesContent} /> */}
+
+              {outputs.projectOverview && (
+                <>
+                  <div ref={projectOverview}>
+                    <Section
+                      title="Project Overview"
+                      value={outputs.projectOverview}
+                    />
+                  </div>
+
+                  <div ref={projectPhasesRef}>
+                    <Section
+                      title="Project Phases"
+                      value={outputs.projectPhasesContent}
+                    />
+                  </div>
+                  <div ref={keyFeaturesRef}>
+                    <Section
+                      title="Key Features"
+                      value={outputs.keyFeaturesContent}
+                    />
+                  </div>
+                  <div ref={technologyStackRef}>
+                    <Section
+                      title="Technology Stack"
+                      value={outputs.technologyStackContent}
+                    />
+                  </div>
+                  <div ref={timelineRef}>
+                    <Section title="Timeline" value={outputs.timelineContent} />
+                  </div>
+                  <div ref={budgetRef}>
+                    <Section title="Budget" value={outputs.budgetContent} />
+                  </div>
+                  <div ref={expectedOutcomesRef}>
+                    <Section
+                      title="Expected Outcomes"
+                      value={outputs.expectedOutcomesContent}
+                    />
+                  </div>
+                </>
+              )}
+            </div>
           </div>
         </>
+      ) : (
+        <>
+          {" "}
+          <ProjectForm generate={overview as any} /> {outputs.projectOverview}{" "}
+        </>
       )}
-    </div>
+    </>
   );
 };
 
