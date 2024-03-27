@@ -6,6 +6,12 @@ import { Button } from "@/components/ui/button";
 import { JSX, SVGProps } from "react";
 import { createClient } from "@/lib/supabase/browser";
 import { FaGithub } from "react-icons/fa";
+import { Russo_One } from "next/font/google";
+const russo = Russo_One({
+  weight: ["400"],
+  subsets: ["cyrillic", "latin", "latin-ext"],
+  style: ["normal"],
+});
 
 export default function Login() {
   const handelLoginWith = (pro: any) => {
@@ -21,20 +27,26 @@ export default function Login() {
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen flex my-10 items-center justify-center">
-      <div className="max-w-sm rounded-lg shadow-lg bg-white p-6 space-y-6 border border-gray-200 dark:border-gray-700">
-        <div className="space-y-2 text-center">
-          <h1 className="text-3xl font-bold">Login</h1>
-          <p className="text-zinc-500 dark:text-zinc-400">
-            By logging in, you accept our
-            <Link className="text-blue-500 hover:text-blue-700" href="#">
-              terms
-            </Link>
-            and
-            <Link className="text-blue-500 hover:text-blue-700" href="#">
-              privacy policy
-            </Link>
-            .{"\n                            "}
+    <div className=" min-h-screen flex my-10 items-center justify-center w-full">
+      <div className=" w-full flex flex-col justify-center items-center text-center rounded-lg shadow-lg  p-6 space-y-6  ">
+        <div className="space-y-2 text-center flex flex-col justify-center items-center">
+          <h1 className="text-2xl mb-2 font-semibold text-red-100">
+            Please sign in to continue
+          </h1>
+          <p
+            className={`sm:w-8/12 w-full px-2 sm:px-20 text-2xl sm:text-6xl leading-tight font-extrabold ${russo.className}`}
+          >
+            Welcome to{" "}
+            <span className="animated-text text-2xl sm:text-6xl">
+              {" "}
+              VisionSync
+            </span>{" "}
+            Projects - Your <span className="animated-text"> AI-Powered </span>
+            Planning Partner
+          </p>
+          <p className=" w-[100vw-20px] sm:w-6/12 mx-5 text-gray-400  mt-2 bg-gray-600/40 p-1 rounded-md backdrop-blur-lg text-[10px] sm:text-sm">
+            VisionSync Projects: Where AI-driven innovation streamlines project
+            management for unparalleled efficiency and creativity.
           </p>
         </div>
         <div className="space-y-4">
@@ -59,7 +71,7 @@ export default function Login() {
           </Button>
           <button
             onClick={() => handelLoginWith("github")}
-            className="w-full bg-black text-white"
+            className="w-full bg-black text-white border rounded-md"
           >
             <div className="flex items-center justify-center">
               <FaGithub className="w-5 h-10 mr-2 py-2" />

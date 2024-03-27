@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { Button, ButtonGroup } from "@nextui-org/react";
+import { Link as ScrollLink } from "react-scroll";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -18,8 +19,8 @@ import Users from "./User";
 const navs = ["about", "help", "price"];
 const Navbar = () => {
   return (
-    <div className="w-full px-[10vw]  mx-auto bg-slate-200 backdrop-blur-xl py-2  rounded-md flex justify-between  shadow-lg fixed top-0 z-50">
-      <NavigationMenu className="">
+    <div className="w-[95vw] mt-1 px-[10vw] pb-4 border-b-1 border-gray-500  mx-auto bg-black/85 backdrop-blur-xl py-2  rounded-md flex justify-between  shadow-lg fixed top-0 z-[200]">
+      <NavigationMenu className=" ">
         <NavigationMenuList>
           <NavigationMenuItem className=" flex justify-center">
             <Image
@@ -50,25 +51,33 @@ const Navbar = () => {
 
             <div className="flex gap-10 ml-10 justify-center align-middle text-center items-center">
               <Link
-                className="font-bold text-black/65 text-lg text-center flex items-center justify-center h-fit hover:bg-black/10 px-3 rounded-sm "
+                className="font-bold text-white hover:border-blue-500 duration-100 hover:scale-105  uppercase border-b-1 text-lg text-center flex items-center justify-center h-fit hover:bg-black/10 px-3 rounded-sm "
                 href={"/"}
               >
                 Home
               </Link>
+              <ScrollLink
+                to="footer"
+                smooth={true}
+                duration={700}
+                className="font-bold text-white hover:border-blue-500 duration-100 hover:scale-105  uppercase border-b-1 text-lg text-center flex items-center justify-center h-fit hover:bg-black/10 px-3 rounded-sm  "
+              >
+                Contact us
+              </ScrollLink>
               <Link
-                className="font-bold text-black/65 text-lg text-center flex items-center justify-center h-fit hover:bg-black/10 px-3 rounded-sm  "
+                className="font-bold text-white hover:border-blue-500 duration-100 hover:scale-105  uppercase border-b-1 text-lg text-center flex items-center justify-center h-fit hover:bg-black/10 px-3 rounded-sm  "
                 href={"/projects"}
               >
                 My projects
               </Link>
               <Link
-                className="font-bold text-black/65 text-lg text-center flex items-center justify-center h-fit hover:bg-black/10 px-3 rounded-sm  "
+                className="font-bold text-white hover:border-blue-500 duration-100 hover:scale-105  uppercase border-b-1 text-lg text-center flex items-center justify-center h-fit hover:bg-black/10 px-3 rounded-sm  "
                 href={"#footer"}
               >
                 Contact us
               </Link>
               <Link
-                className="font-bold text-black/65 text-lg text-center flex items-center justify-center h-fit hover:bg-black/10 px-3 rounded-sm  "
+                className="font-bold text-white hover:border-blue-500 duration-100 hover:scale-105  uppercase border-b-1 text-lg text-center flex items-center justify-center h-fit hover:bg-black/10 px-3 rounded-sm  "
                 href={"#footer"}
               >
                 Feedback

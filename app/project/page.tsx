@@ -2,6 +2,7 @@
 import Modals from "@/components/Modal";
 import gsap from "gsap";
 import React, { ReactNode, useEffect, useRef, useState } from "react";
+import { setProjectDes, setProjectName } from "@/redux/formSlice";
 
 import Section from "@/components/Section";
 import Sidebar from "@/components/Sidebar";
@@ -38,11 +39,11 @@ const Home = () => {
       { opacity: 1, y: 0, duration: 1 }, // To
     );
   }, [outputs.projectOverview]);
-  async function phase() {
+  async function phase(preValue: string) {
     // For text-only input, use the gemini-pro model
     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
-    const prompt = `your an project planer assistent your task is to give project phases content basde on my overview of project plan " ${outputs.projectOverview} " `;
+    const prompt = `your an project planer assistent your task is to give project phases content basde on my overview of project plan " ${preValue} " `;
     console.log("====================================");
     console.log(prompt);
     console.log("====================================");
@@ -157,7 +158,7 @@ const Home = () => {
 
     dispatch(setProjectOverview(text));
 
-    phase();
+    phase(text);
     console.log("====================================");
     console.log(text);
     console.log("====================================");

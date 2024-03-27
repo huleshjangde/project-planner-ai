@@ -98,7 +98,7 @@ const Users = () => {
               as="button"
               name={userMetadata.name}
               description={userMetadata.email}
-              className="transition-transform text-black"
+              className="transition-transform text-white"
               avatarProps={{
                 src: `${userMetadata.avatar_url}`,
               }}

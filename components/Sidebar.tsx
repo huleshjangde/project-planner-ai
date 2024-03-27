@@ -20,6 +20,7 @@ import { createClient } from "@/lib/supabase/browser";
 import { redirect } from "next/navigation";
 import { navigate } from "@/app/actions";
 import { toast } from "sonner";
+import { setProjectDes, setProjectName } from "@/redux/formSlice";
 
 interface SidebarProps {
   onProjectPhasesClick: () => void;
@@ -86,6 +87,8 @@ const Sidebar: React.FC<SidebarProps> = ({
         // Handle error (e.g., show error message to the user)
       } else {
         console.log("Project saved successfully:", data);
+        dispatch(setProjectDes(""));
+        dispatch(setProjectName(""));
         setSaved(true);
 
         toast.success("Project saved successfully!");
@@ -99,7 +102,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     const id: any = data.session?.user.id;
 
     await supabase.from("projects").delete().match({ id: deleteId });
-    toast.success("Project Delet successfully!");
+    toast.success("Project Delete successfully!");
 
     navigate();
     dispatch(resetOutputs());

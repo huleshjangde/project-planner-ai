@@ -42,7 +42,7 @@ export default function Footer() {
   return (
     <footer
       id="footer"
-      className="footer w-full py-12 bg-gray-100 dark:bg-gray-800 text-black"
+      className="footer relative z-50 w-full py-12 bg-gray-100 dark:bg-gray-800 text-black"
     >
       <div className="container grid gap-8 px-4 md:px-6 lg:grid-cols-3">
         <div className="flex flex-col items-center lg:items-start">
@@ -57,7 +57,7 @@ export default function Footer() {
             <span className="sr-only">AgileMind</span>
           </Link>
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            © 2024 AgileMind Inc. All rights reserved.
+            © 2024 VisionSync Inc. All rights reserved.
           </p>
         </div>
         <div className="space-y-2 text-center lg:text-left">

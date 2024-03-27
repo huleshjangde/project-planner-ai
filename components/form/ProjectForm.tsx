@@ -42,7 +42,12 @@ export default function ProjectForm({ generate }: any) {
       // console.log('====================================');
       // console.log(data.content);
       // console.log('====================================');
-      await generate();
+
+      if (forms.projectName && forms.projectDes) {
+        await generate();
+      } else {
+        toast.warning("please fill all field!!");
+      }
     } finally {
       setIsLoading(false);
     }

@@ -51,7 +51,7 @@ const Content = ({ title, icon, details }: any) => {
     <>
       <div
         ref={ref}
-        className="sm:w-4/5 w-full h-screen opacity-0 flex flex-col justify-center items-center sm:flex-row mt-40 bg-black px-10 py-5 rounded-md"
+        className="sm:w-4/5 w-full h-screen opacity-0 flex flex-col justify-center items-center sm:flex-row mt-40 px-10 py-5 rounded-md"
       >
         {" "}
         <div className="text-center w-1/2 flex sm:flex-row flex-col items-center justify-between h-full">
