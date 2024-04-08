@@ -23,8 +23,10 @@ import {
 } from "../../redux/projectSlice";
 import FloatingActionButtons from "@/components/actions/Action";
 import SidebarDesk from "@/components/SidebarDesk";
+import { api_key } from "@/keys";
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const genAI = new GoogleGenerativeAI("AIzaSyAHAHgWkZJmzBv8ug2wlTIqPKGUGG7Xm0g");
+
 const Home = () => {
   const dispatch = useDispatch();
   const forms = useSelector((state: RootState) => state.projectForm);
@@ -42,99 +44,111 @@ const Home = () => {
       { opacity: 1, y: 0, duration: 1 }, // To
     );
   }, [outputs.projectOverview]);
+
+  const model = genAI.getGenerativeModel({ model: "gemini-pro" });
   async function phase(preValue: string) {
     // For text-only input, use the gemini-pro model
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
     const prompt = `your an project planer assistent your task is to give project phases content basde on my overview of project plan " ${preValue} " `;
-    console.log("====================================");
-    console.log(prompt);
-    console.log("====================================");
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
 
-    dispatch(setProjectPhasesContent(text));
+    const res = await fetch("/api/gemini", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ prevV: "helo", prompt: prompt }),
+    });
+
+    const text = await res.json();
+
+    dispatch(setProjectPhasesContent(text.result));
     features();
   }
   async function features() {
     // For text-only input, use the gemini-pro model
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
     const prompt = `Your An Senior and super senior software engineer your task is to suggest features in my project . here is my project overview " ${outputs.projectOverview} "  and my idea is :  ${forms.projectDes}`;
-    console.log("====================================");
-    console.log(prompt);
-    console.log("====================================");
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
-    technology(text);
-    timeline(text);
+    const res = await fetch("/api/gemini", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ prevV: "helo", prompt: prompt }),
+    });
 
-    dispatch(setKeyFeaturesContent(text));
+    const text = await res.json();
+    technology(text.result);
+    timeline(text.result);
+
+    dispatch(setKeyFeaturesContent(text.result));
   }
 
   async function technology(preValue: string) {
     // For text-only input, use the gemini-pro model
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
     const prompt = `your an project planer assistent your task is to make and suggestion key technology stack to build or execute  for my project plan here is my project plan  overview " ${outputs.projectOverview} "  and features ${preValue}`;
-    console.log("====================================");
-    console.log(prompt);
-    console.log("====================================");
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
+    const res = await fetch("/api/gemini", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ prevV: "helo", prompt: prompt }),
+    });
 
-    dispatch(setTechnologyStackContent(text));
+    const text = await res.json();
+
+    dispatch(setTechnologyStackContent(text.result));
   }
   async function timeline(preValue: string) {
     // For text-only input, use the gemini-pro model
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
     const prompt = `your an project planer assistent your task is to make and suggestion key technology stack to build or execute  for my project plan here is my project plan  overview " $ ${outputs.projectPhasesContent} " and here is my features for project : ${preValue} `;
-    console.log("====================================");
-    console.log(prompt);
-    console.log("====================================");
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
-    dispatch(setTimelineContent(text));
-    budget(text);
+    const res = await fetch("/api/gemini", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ prevV: "helo", prompt: prompt }),
+    });
+
+    const text = await res.json();
+    dispatch(setTimelineContent(text.result));
+    budget(text.result);
   }
 
   async function budget(preValue: string) {
     // For text-only input, use the gemini-pro model
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
     const prompt = `your an project planer assistent your task is to make and suggestion budget to build or execute  for my project plan here is my project plan  overview " ${outputs.projectOverview} " and here is my features for project : ${outputs.keyFeaturesContent} . and here is my timelite to develope project : ${preValue} `;
-    console.log("====================================");
-    console.log(prompt);
-    console.log("====================================");
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
-    dispatch(setBudgetContent(text));
+    const res = await fetch("/api/gemini", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ prevV: "helo", prompt: prompt }),
+    });
 
-    outcomes(text);
+    const text = await res.json();
+    dispatch(setBudgetContent(text.result));
+
+    outcomes(text.result);
   }
   async function outcomes(preValue: string) {
     // For text-only input, use the gemini-pro model
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
     const prompt = `your an project planer assistent your task is to make and suggestion expected outcomes    for my project plan here is my project plan  overview " ${outputs.projectOverview} " and here is my features for project : ${outputs.keyFeaturesContent} . `;
-    console.log("====================================");
-    console.log(prompt);
-    console.log("====================================");
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
-    dispatch(setExpectedOutcomesContent(text));
+    const res = await fetch("/api/gemini", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ prevV: "helo", prompt: prompt }),
+    });
+
+    const text = await res.json();
+    dispatch(setExpectedOutcomesContent(text.result));
   }
   async function overview() {
-    // For text-only input, use the gemini-pro model
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-
     const prompt = `your an project planner your task is to make project plan overview based on idea or imagination project name ${forms.projectName} and description of my project idea is ${forms.projectDes}  . please make it in table with column name "section , overview "  and section " Project Name
     Project Goal,
     Target Audience,
@@ -142,29 +156,20 @@ const Home = () => {
     Technology Stack,
     Budget,
     Expected Outcomes " `;
+    // For text-only input, use the gemini-pro model
+    const res = await fetch("/api/gemini", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ prevV: "helo", prompt: prompt }),
+    });
 
-    // Project Phases,Project Name
-    // Project Goal
-    // Target Audience
-    // Project Phases
-    // Key Features
-    // Technology Stack
-    // Timeline
-    // Budget
-    // Expected Outcomes
-    console.log("====================================");
-    console.log(prompt);
-    console.log("====================================");
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
+    const text = await res.json();
 
-    dispatch(setProjectOverview(text));
+    dispatch(setProjectOverview(text.result));
 
-    phase(text);
-    console.log("====================================");
-    console.log(text);
-    console.log("====================================");
+    phase(text.result);
   }
 
   const projectPhasesRef = useRef<HTMLDivElement>(null);
