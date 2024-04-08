@@ -37,7 +37,7 @@ interface SidebarProps {
 const btnClass =
   "mb-2  w-full flex text-left justify-start text-white font-bold  bg-black/75";
 
-const Sidebar: React.FC<SidebarProps> = ({
+const SidebarDesk: React.FC<SidebarProps> = ({
   deleteId,
   active,
   onProjectPhasesClick,
@@ -112,7 +112,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     setShow(!show);
   };
   return (
-    <div className="sm:w-72 w-screen fixed top-20 left-0 h-screen sm:sticky sm:top-10 px-5 sm:px-0 sm:left-10 z-10  sm:flex items-center justify-center pl-0 sm:pl-5 rounded-md  flex-col">
+    <div className="sm:w-72 w-screen hidden  fixed top-20 left-0 h-screen sm:sticky sm:top-10 px-5 sm:px-0 sm:left-10 z-10  sm:flex items-center justify-center pl-0 sm:pl-5 rounded-md  flex-col">
       <div
         className={`  ease-linear duration-100 w-full sm:w-64  h-fit bg-slate-900 shadow-lg rounded-md py-10 p-2 flex justify-center   items-center ${show ? "w-64" : " w-14 "} `}
       >
@@ -229,4 +229,4 @@ const Sidebar: React.FC<SidebarProps> = ({
   );
 };
 
-export default Sidebar;
+export default SidebarDesk;

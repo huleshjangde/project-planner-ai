@@ -33,6 +33,10 @@ export default function Login() {
           <h1 className="text-2xl mb-2 font-semibold text-red-100">
             Please sign in to continue
           </h1>
+          <p className="text-red-100">
+            ( Feel confident logging in. Your email will not be used for spam or
+            any unauthorized communication. )
+          </p>
           <p
             className={`sm:w-8/12 w-full px-2 sm:px-20 text-2xl sm:text-6xl leading-tight font-extrabold ${russo.className}`}
           >

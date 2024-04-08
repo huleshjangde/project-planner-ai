@@ -57,7 +57,7 @@ export default function ProjectForm({ generate }: any) {
   return (
     <div
       ref={animateMeRef}
-      className="w-full my-20 h-screen space-y-4 flex flex-col justify-center items-center"
+      className="w-full my-20 px-5 sm:px-0 h-screen space-y-4 flex flex-col justify-center items-center"
     >
       <div className=" max-w-4xl ">
         {/* <User/> */}

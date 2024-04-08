@@ -23,7 +23,7 @@ const Content = ({ title, icon, details }: any) => {
         scrollTrigger: {
           trigger: ref.current,
           start: "top 75%", // Start animation when top of the trigger hits 75% viewport height
-          end: "bottom 25%", // End animation when bottom of the trigger hits 25% viewport height
+          end: "bottom 5%", // End animation when bottom of the trigger hits 25% viewport height
           toggleActions: "play none none reverse", // Reverse the animation when scrolling back
           onEnter: () => {
             gsap.to(ref.current, { opacity: 1, duration: 1 });
@@ -51,15 +51,15 @@ const Content = ({ title, icon, details }: any) => {
     <>
       <div
         ref={ref}
-        className="sm:w-4/5 w-full h-screen opacity-0 flex flex-col justify-center items-center sm:flex-row mt-40 px-10 py-5 rounded-md"
+        className="sm:w-4/5 w-full h-full sm:h-screen opacity-0 flex flex-col  justify-center items-center sm:flex-row mt-40 px-4 sm:px-10 py-5 rounded-md"
       >
         {" "}
-        <div className="text-center w-1/2 flex sm:flex-row flex-col items-center justify-between h-full">
+        <div className="text-center w-full  sm:w-1/2 flex sm:flex-row flex-col items-center justify-between">
           <div className="flex justify-center items-center flex-col mt-20">
             <p className="animated-text relative z-20">
               Crafting Tomorrow: See What We are Building for You
             </p>
-            <h1 className="sm:text-5xl text-sm font-extrabold text-white">
+            <h1 className="sm:text-5xl text-3xl font-extrabold text-white">
               Behind the Scenes of Tomorrow: Your Preview Starts Here.
             </h1>
             <Image
@@ -71,11 +71,11 @@ const Content = ({ title, icon, details }: any) => {
             />
           </div>
         </div>
-        <div className="text-center relative w-1/2 ">
+        <div className="text-center relative w-full sm:w-1/2 ">
           <Image
             src={"/arrow2.png"}
             alt={"ss "}
-            className="w-40 -left-40 top-10 absolute z-10 rounded-md "
+            className="w-40 hidden sm:block -left-40 top-10 absolute z-10 rounded-md "
             width={"300"}
             height={200}
           />
@@ -102,8 +102,8 @@ const Content = ({ title, icon, details }: any) => {
                 </Card>
               </Tab>
               <Tab key="music" title="Key Features">
-                <Card>
-                  <CardBody>
+                <Card className="">
+                  <CardBody className=" bg-blue-50">
                     <Section
                       title="Key Features"
                       value={`### Key Features of Hospital Management Software

@@ -22,6 +22,9 @@ import FloatingActionButtons from "@/components/actions/Action";
 import { fetchProjects } from "@/redux/projectsSlice";
 import Yt from "@/components/Yt";
 import { navigate } from "@/app/actions";
+import { motion } from "framer-motion";
+import SidebarDesk from "@/components/SidebarDesk";
+import { FaGreaterThan } from "react-icons/fa";
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const genAI = new GoogleGenerativeAI("AIzaSyAHAHgWkZJmzBv8ug2wlTIqPKGUGG7Xm0g");
 const Home = ({ params }: { params: { slug: number } }) => {
@@ -137,13 +140,16 @@ const Home = ({ params }: { params: { slug: number } }) => {
 
   const scrollToSection = (ref: React.RefObject<HTMLDivElement>) => {
     ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    setShow(false);
   };
+
+  const [show, setShow] = useState(false);
 
   return (
     <>
       {outputs && (
-        <div className="w-full bg-white flex ">
-          {outputs && (
+        <div className="w-full bg-black/90 flex ">
+          {/* {outputs && (
             <Sidebar
               onProjectPhasesClick={() => scrollToSection(projectPhasesRef)}
               onKeyFeaturesClick={() => scrollToSection(keyFeaturesRef)}
@@ -158,10 +164,54 @@ const Home = ({ params }: { params: { slug: number } }) => {
               deleteId={deleteId}
             />
           )}
+ */}
+
+          <button
+            className="fixed left-2 top-28 z-50 sm:hidden text-white"
+            onClick={() => setShow(!show)}
+          >
+            <FaGreaterThan className="size-7 font-thin bg-white rounded-full px-2 text-gray-800" />
+          </button>
+          <motion.div
+            initial={{ x: -300 }} // Initial position when hidden
+            animate={{ x: show ? 0 : -300 }} // Position when shown or hidden
+            transition={{ duration: 0.3 }}
+            className="absolute z-40"
+          >
+            {show && (
+              <Sidebar
+                onProjectPhasesClick={() => scrollToSection(projectPhasesRef)}
+                onKeyFeaturesClick={() => scrollToSection(keyFeaturesRef)}
+                onTechnologyStackClick={() =>
+                  scrollToSection(technologyStackRef)
+                }
+                onTimelineClick={() => scrollToSection(timelineRef)}
+                onBudgetClick={() => scrollToSection(budgetRef)}
+                onExpectedOutcomesClick={() =>
+                  scrollToSection(expectedOutcomesRef)
+                }
+                onProjectOverviewClick={() => scrollToSection(projectOverview)}
+                active={true}
+                deleteId={deleteId}
+              />
+            )}
+          </motion.div>
+
+          <SidebarDesk
+            onProjectPhasesClick={() => scrollToSection(projectPhasesRef)}
+            onKeyFeaturesClick={() => scrollToSection(keyFeaturesRef)}
+            onTechnologyStackClick={() => scrollToSection(technologyStackRef)}
+            onTimelineClick={() => scrollToSection(timelineRef)}
+            onBudgetClick={() => scrollToSection(budgetRef)}
+            onExpectedOutcomesClick={() => scrollToSection(expectedOutcomesRef)}
+            onProjectOverviewClick={() => scrollToSection(projectOverview)}
+            active={true}
+            deleteId={deleteId}
+          />
 
           <div
             ref={animateMeRef}
-            className="w-full ml-10 px-10 py-10 bg-white text-black   "
+            className="w-full ml-0 sm:ml-10 sm:px-10 px-2 py-10 bg-black text-black   "
           >
             {overview && (
               <>

@@ -15,18 +15,18 @@ import {
 const Section = ({ value, title }: { value: string; title: string }) => {
   return (
     <>
-      <div className="mt-10 w-full bg-gray-300 overflow-y-hidden border-2 border-gray-300 rounded-xl shadow-md px-2 flex-1 relative">
+      <div className="mt-10 w-full bg-black/85 overflow-y-hidden border-2 border-gray-300 rounded-xl shadow-md px-2 flex-1 relative">
         <span className="w-36 absolute top-12 h-60 rounded-full bg-blue-500 blur-[100px] -z-2"></span>
 
-        <Card className="w-full overflow-y-hidden mt-3 backdrop-blur-md bg-white/65">
+        <Card className="w-full overflow-y-hidden mt-3 backdrop-blur-md bg-black/65">
           <CardHeader className="flex gap-3">
-            <GrOverview className=" bg-slate-300  text-4xl p-1 rounded-md text-black" />
+            <GrOverview className=" bg-black/55 text-4xl p-1 rounded-md text-white" />
             <div className="flex flex-col">
-              <p className="text-lg font-bold text-slate-800">{title}</p>
+              <p className="text-lg font-bold text-slate-200">{title}</p>
             </div>
           </CardHeader>
           <Divider />
-          <CardBody>
+          <CardBody className="text-white">
             {value ? (
               <Markdown>{value}</Markdown>
             ) : (

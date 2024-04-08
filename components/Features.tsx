@@ -83,8 +83,8 @@ function ScrollSection() {
                 className="rounded-md shadow-md mb-10"
                 alt="Picture of the author"
               />
-              <h3 className=" text-6xl">{advantage.title}</h3>
-              <p className="w-4/6 text-2xl mt-3 text-gray-400 text-center">
+              <h3 className="text-3xl sm:text-6xl">{advantage.title}</h3>
+              <p className="w-4/6 text-base sm:text-2xl mt-3 text-gray-400 text-center">
                 {advantage.description}
               </p>
             </div>

@@ -28,7 +28,7 @@ const Page = () => {
       <p className="mt-20 text-4xl font-bold">Your Projects</p>
       <p className="w-20 mt-2 h-1 bg-slate-300"></p>
 
-      <div className="w-full  px-40 py-5 flex gap-4 flex-wrap min-h-[400px] ">
+      <div className="w-full px-2 sm:px-40 py-5 flex gap-4 flex-col sm:flex-row justify-center sm:justify-normal  flex-wrap min-h-[400px] ">
         {projects.map((item, index) => {
           return (
             <>

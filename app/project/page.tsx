@@ -1,5 +1,6 @@
 "use client";
 import Modals from "@/components/Modal";
+import { motion } from "framer-motion";
 import gsap from "gsap";
 import React, { ReactNode, useEffect, useRef, useState } from "react";
 import { setProjectDes, setProjectName } from "@/redux/formSlice";
@@ -9,6 +10,7 @@ import Sidebar from "@/components/Sidebar";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import ProjectForm from "@/components/form/ProjectForm";
+import { FaGreaterThan } from "react-icons/fa6";
 import {
   setProjectOverview,
   setProjectPhasesContent,
@@ -20,6 +22,7 @@ import {
   resetOutputs,
 } from "../../redux/projectSlice";
 import FloatingActionButtons from "@/components/actions/Action";
+import SidebarDesk from "@/components/SidebarDesk";
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const genAI = new GoogleGenerativeAI("AIzaSyAHAHgWkZJmzBv8ug2wlTIqPKGUGG7Xm0g");
 const Home = () => {
@@ -174,7 +177,10 @@ const Home = () => {
 
   const scrollToSection = (ref: React.RefObject<HTMLDivElement>) => {
     ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    setShow(false);
   };
+
+  const [show, setShow] = useState(false);
 
   return (
     <>
@@ -183,8 +189,41 @@ const Home = () => {
         <>
           {/* <FloatingActionButtons /> */}
           {/* <ProjectForm generate={overview} /> */}
-          <div className="w-full bg-white flex ">
-            <Sidebar
+          <div className="w-full bg-black/90 flex ">
+            <button
+              className="fixed left-2 top-28 z-50 sm:hidden text-white"
+              onClick={() => setShow(!show)}
+            >
+              <FaGreaterThan className="size-7 font-thin bg-white rounded-full px-2 text-gray-800" />
+            </button>
+            <motion.div
+              initial={{ x: -300 }} // Initial position when hidden
+              animate={{ x: show ? 0 : -300 }} // Position when shown or hidden
+              transition={{ duration: 0.3 }}
+              className="absolute z-40"
+            >
+              {show && (
+                <Sidebar
+                  active={false}
+                  onProjectPhasesClick={() => scrollToSection(projectPhasesRef)}
+                  onKeyFeaturesClick={() => scrollToSection(keyFeaturesRef)}
+                  onTechnologyStackClick={() =>
+                    scrollToSection(technologyStackRef)
+                  }
+                  onTimelineClick={() => scrollToSection(timelineRef)}
+                  onBudgetClick={() => scrollToSection(budgetRef)}
+                  onExpectedOutcomesClick={() =>
+                    scrollToSection(expectedOutcomesRef)
+                  }
+                  onProjectOverviewClick={() =>
+                    scrollToSection(projectOverview)
+                  }
+                  deleteId={0}
+                />
+              )}
+            </motion.div>
+
+            <SidebarDesk
               active={false}
               onProjectPhasesClick={() => scrollToSection(projectPhasesRef)}
               onKeyFeaturesClick={() => scrollToSection(keyFeaturesRef)}
@@ -200,7 +239,7 @@ const Home = () => {
 
             <div
               ref={animateMeRef}
-              className="w-full ml-10 px-10 py-10 bg-white text-black   "
+              className="w-full ml-0 px-2 sm:ml-10 sm:px-10 py-10 bg-black text-black   "
             >
               {/* <div className="  h-fit w-full  bottom-0 flex justify-center items-center gap-4 pb-4">
       <button

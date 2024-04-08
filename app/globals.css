@@ -117,11 +117,11 @@ th {
 }
 
 tr:nth-child(even) {
-  background-color: #f9f9f9;
+  background-color: #1c1a1c;
 }
 
 tr:hover {
-  background-color: #f1f1f1;
+  background-color: #3e3a3e;
 }
 /* strong {
 margin-top: 10px;

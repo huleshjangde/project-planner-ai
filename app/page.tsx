@@ -1,6 +1,5 @@
 import Navbar from "@/components/navbar";
 import React from "react";
-import { Russo_One } from "next/font/google";
 import Image from "next/image";
 import ScrollSection from "@/components/Features";
 import Faq from "@/components/Faq";
@@ -10,12 +9,12 @@ import Link from "next/link";
 import { Toaster, toast } from "sonner";
 import { SparklesCore } from "@/components/ui/sparkles";
 import { InfiniteMovingCardsDemo } from "@/components/InfiniteMovingCardsDemo";
+import { Russo_One } from "next/font/google";
 const russo = Russo_One({
   weight: ["400"],
   subsets: ["cyrillic", "latin", "latin-ext"],
   style: ["normal"],
 });
-
 const Home = () => {
   return (
     <div className="  p-0 w-full mt-20 ">
@@ -34,7 +33,10 @@ const Home = () => {
           Projects - Your <span className="animated-text"> AI-Powered </span>
           Planning Partner
         </p>
-        <p className=" w-[100vw-20px] sm:w-6/12 mx-5 text-gray-400  mt-2 bg-gray-600/40 p-1 rounded-md backdrop-blur-lg text-[10px] sm:text-sm">
+        <p
+          className=" w-[100vw-20px]
+        mt-5 mx-5 text-gray-400   bg-gray-600/40 p-1 rounded-md backdrop-blur-lg text-[10px] sm:text-sm"
+        >
           VisionSync Projects: Where AI-driven innovation streamlines project
           management for unparalleled efficiency and creativity.
         </p>

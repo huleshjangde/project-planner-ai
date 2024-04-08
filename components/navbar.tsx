@@ -1,7 +1,8 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Button, ButtonGroup } from "@nextui-org/react";
 import { Link as ScrollLink } from "react-scroll";
+import { Transition } from "@headlessui/react";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -13,11 +14,17 @@ import {
   NavigationMenuViewport,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import { FiAlignLeft } from "react-icons/fi";
 import Link from "next/link";
 import Image from "next/image";
 import Users from "./User";
+import { MdMenuOpen } from "react-icons/md";
 const navs = ["about", "help", "price"];
 const Navbar = () => {
+  const [show, setShow] = useState(false);
+  const showMenu = () => {
+    setShow(!show);
+  };
   return (
     <div className="w-[95vw] mt-1 px-[10vw] pb-4 border-b-1 border-gray-500  mx-auto bg-black/85 backdrop-blur-xl py-2  rounded-md flex justify-between  shadow-lg fixed top-0 z-[200]">
       <NavigationMenu className=" ">
@@ -49,7 +56,7 @@ const Navbar = () => {
               );
             })} */}
 
-            <div className="flex gap-10 ml-10 justify-center align-middle text-center items-center">
+            <div className=" hidden sm:flex  gap-10 ml-10 justify-center align-middle text-center items-center">
               <Link
                 className="font-bold text-white hover:border-blue-500 duration-100 hover:scale-105  uppercase border-b-1 text-lg text-center flex items-center justify-center h-fit hover:bg-black/10 px-3 rounded-sm "
                 href={"/"}
@@ -98,7 +105,63 @@ const Navbar = () => {
         </Button> */}
 
         <Users />
+        <button className="block sm:hidden" onClick={showMenu}>
+          <FiAlignLeft />
+        </button>
       </div>
+      <Transition
+        show={show}
+        enter="transition-opacity duration-300"
+        enterFrom="opacity-0"
+        enterTo="opacity-100"
+        leave="transition-opacity duration-300"
+        leaveFrom="opacity-100"
+        leaveTo="opacity-0"
+      >
+        <div
+          className={`fixed w-screen transition-all ease-linear ${show ? "flex" : "hidden"} duration-700  flex justify-center items-center h-screen top-20 right-1 bg-black`}
+        >
+          <div className=" flex flex-col  gap-10 ml-10 justify-center align-middle text-center items-center">
+            <Link
+              className="font-bold text-white hover:border-blue-500 duration-100 hover:scale-105  uppercase border-b-1 text-lg text-center flex items-center justify-center h-fit hover:bg-black/10 px-3 rounded-sm "
+              href={"/"}
+              onClick={showMenu}
+            >
+              Home
+            </Link>
+            <ScrollLink
+              onClick={showMenu}
+              to="footer"
+              smooth={true}
+              duration={700}
+              className="font-bold text-white hover:border-blue-500 duration-100 hover:scale-105  uppercase border-b-1 text-lg text-center flex items-center justify-center h-fit hover:bg-black/10 px-3 rounded-sm  "
+            >
+              Contact us
+            </ScrollLink>
+            <Link
+              onClick={showMenu}
+              className="font-bold text-white hover:border-blue-500 duration-100 hover:scale-105  uppercase border-b-1 text-lg text-center flex items-center justify-center h-fit hover:bg-black/10 px-3 rounded-sm  "
+              href={"/projects"}
+            >
+              My projects
+            </Link>
+            <Link
+              onClick={showMenu}
+              className="font-bold text-white hover:border-blue-500 duration-100 hover:scale-105  uppercase border-b-1 text-lg text-center flex items-center justify-center h-fit hover:bg-black/10 px-3 rounded-sm  "
+              href={"#footer"}
+            >
+              Contact us
+            </Link>
+            <Link
+              onClick={showMenu}
+              className="font-bold text-white hover:border-blue-500 duration-100 hover:scale-105  uppercase border-b-1 text-lg text-center flex items-center justify-center h-fit hover:bg-black/10 px-3 rounded-sm  "
+              href={"#footer"}
+            >
+              Feedback
+            </Link>
+          </div>
+        </div>
+      </Transition>
     </div>
   );
 };
