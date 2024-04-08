@@ -31,7 +31,7 @@ const Navbar = () => {
         <NavigationMenuList>
           <NavigationMenuItem className=" flex justify-center">
             <Image
-              src={"/logo.png"}
+              src={"/logo.jpeg"}
               alt={"logo"}
               className="w-11 h-auto rounded-full"
               width={44}
